@@ -29,8 +29,8 @@ jobs:
       - name: Create and push tag
         if: steps.version.outputs.version != ''
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "amanvarshney.work@gmail.com"
+          git config --local user.name "Aman Varshney"
           # Check if tag exists before creating
           if ! git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
             git tag -a "v${{ steps.version.outputs.version }}" -m "Release v${{ steps.version.outputs.version }}"
