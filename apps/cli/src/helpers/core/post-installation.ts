@@ -340,7 +340,9 @@ async function getDatabaseInstructions(
 				`${pc.cyan("•")} Start docker container: ${`${runCmd} db:start`}`,
 			);
 		}
-		instructions.push(`${pc.cyan("•")} Apply schema: ${`${runCmd} db:push`}`);
+		if (!(dbSetup === "d1" && serverDeploy === "alchemy")) {
+			instructions.push(`${pc.cyan("•")} Apply schema: ${`${runCmd} db:push`}`);
+		}
 		if (!(dbSetup === "d1" && serverDeploy === "alchemy")) {
 			instructions.push(
 				`${pc.cyan("•")} Database UI: ${`${runCmd} db:studio`}`,
