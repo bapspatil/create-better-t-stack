@@ -1,12 +1,12 @@
 {{#if (eq orm "prisma")}}
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 {{#if (or (includes frontend "native-nativewind") (includes frontend "native-unistyles"))}}
 import { expo } from "@better-auth/expo";
 {{/if}}
 import prisma from "../db";
 
-export const auth = betterAuth({
+export const auth = betterAuth<BetterAuthOptions>({
   database: prismaAdapter(prisma, {
     {{#if (eq database "postgres")}}provider: "postgresql"{{/if}}
     {{#if (eq database "sqlite")}}provider: "sqlite"{{/if}}
@@ -37,7 +37,7 @@ export const auth = betterAuth({
 
 {{#if (eq orm "drizzle")}}
 {{#if (or (eq runtime "bun") (eq runtime "node"))}}
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 {{#if (or (includes frontend "native-nativewind") (includes frontend "native-unistyles"))}}
 import { expo } from "@better-auth/expo";
@@ -45,7 +45,7 @@ import { expo } from "@better-auth/expo";
 import { db } from "../db";
 import * as schema from "../db/schema/auth";
 
-export const auth = betterAuth({
+export const auth = betterAuth<BetterAuthOptions>({
   database: drizzleAdapter(db, {
     {{#if (eq database "postgres")}}provider: "pg",{{/if}}
     {{#if (eq database "sqlite")}}provider: "sqlite",{{/if}}
@@ -75,7 +75,7 @@ export const auth = betterAuth({
 {{/if}}
 
 {{#if (eq runtime "workers")}}
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 {{#if (or (includes frontend "native-nativewind") (includes frontend "native-unistyles"))}}
 import { expo } from "@better-auth/expo";
@@ -84,7 +84,7 @@ import { db } from "../db";
 import * as schema from "../db/schema/auth";
 import { env } from "cloudflare:workers";
 
-export const auth = betterAuth({
+export const auth = betterAuth<BetterAuthOptions>({
   database: drizzleAdapter(db, {
     {{#if (eq database "postgres")}}provider: "pg",{{/if}}
     {{#if (eq database "sqlite")}}provider: "sqlite",{{/if}}
@@ -117,14 +117,14 @@ export const auth = betterAuth({
 {{/if}}
 
 {{#if (eq orm "mongoose")}}
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 {{#if (or (includes frontend "native-nativewind") (includes frontend "native-unistyles"))}}
 import { expo } from "@better-auth/expo";
 {{/if}}
 import { client } from "../db";
 
-export const auth = betterAuth({
+export const auth = betterAuth<BetterAuthOptions>({
   database: mongodbAdapter(client),
   trustedOrigins: [
     process.env.CORS_ORIGIN || "",
@@ -149,12 +149,12 @@ export const auth = betterAuth({
 {{/if}}
 
 {{#if (eq orm "none")}}
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 {{#if (or (includes frontend "native-nativewind") (includes frontend "native-unistyles"))}}
 import { expo } from "@better-auth/expo";
 {{/if}}
 
-export const auth = betterAuth({
+export const auth = betterAuth<BetterAuthOptions>({
   database: "", // Invalid configuration
   trustedOrigins: [
     process.env.CORS_ORIGIN || "",
