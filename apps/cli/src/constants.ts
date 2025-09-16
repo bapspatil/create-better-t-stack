@@ -13,6 +13,7 @@ export const DEFAULT_CONFIG_BASE = {
 	database: "sqlite",
 	orm: "drizzle",
 	auth: "better-auth",
+	payments: "none",
 	addons: ["turborepo"],
 	examples: [],
 	git: true,
@@ -39,8 +40,8 @@ export function getDefaultConfig() {
 export const DEFAULT_CONFIG = getDefaultConfig();
 
 export const dependencyVersionMap = {
-	"better-auth": "^1.3.9",
-	"@better-auth/expo": "^1.3.9",
+	"better-auth": "^1.3.10",
+	"@better-auth/expo": "^1.3.10",
 
 	"@clerk/nextjs": "^6.31.5",
 	"@clerk/clerk-react": "^5.45.0",
@@ -139,9 +140,9 @@ export const dependencyVersionMap = {
 	"@tanstack/react-query-devtools": "^5.85.5",
 	"@tanstack/react-query": "^5.85.5",
 
-	"@tanstack/solid-query": "^5.75.0",
-	"@tanstack/solid-query-devtools": "^5.75.0",
-	"@tanstack/solid-router-devtools": "^1.131.25",
+	"@tanstack/solid-query": "^5.87.4",
+	"@tanstack/solid-query-devtools": "^5.87.4",
+	"@tanstack/solid-router-devtools": "^1.131.44",
 
 	wrangler: "^4.23.0",
 	"@cloudflare/vite-plugin": "^1.9.0",
@@ -155,6 +156,9 @@ export const dependencyVersionMap = {
 	nitropack: "^2.12.4",
 
 	dotenv: "^17.2.1",
+
+	"@polar-sh/better-auth": "^1.1.3",
+	"@polar-sh/sdk": "^0.34.16",
 } as const;
 
 export type AvailableDependencies = keyof typeof dependencyVersionMap;
