@@ -48,7 +48,7 @@
   },
   "homepage": "https://better-t-stack.dev/",
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown --publint",
     "dev": "tsdown --watch",
     "check-types": "tsc --noEmit",
     "check": "biome check --write .",
@@ -82,6 +82,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.3.1",
     "@vitest/ui": "^3.2.4",
+    "publint": "^0.3.12",
     "tsdown": "^0.14.2",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
