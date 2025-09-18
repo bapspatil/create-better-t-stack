@@ -32,6 +32,7 @@ export async function setupExamples(config: ProjectConfig) {
 			frontend.includes("tanstack-router") ||
 			frontend.includes("next") ||
 			frontend.includes("tanstack-start");
+		const hasNext = frontend.includes("next");
 		const hasReactNative =
 			frontend.includes("native-nativewind") ||
 			frontend.includes("native-unistyles");
@@ -45,6 +46,11 @@ export async function setupExamples(config: ProjectConfig) {
 			} else if (hasReactWeb) {
 				dependencies.push("@ai-sdk/react", "streamdown");
 			}
+
+			if (hasNext) {
+				dependencies.push("shiki");
+			}
+
 			await addPackageDependency({
 				dependencies,
 				projectDir: webClientDir,

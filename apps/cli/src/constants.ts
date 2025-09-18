@@ -113,7 +113,8 @@ export const dependencyVersionMap = {
 	"@ai-sdk/vue": "^2.0.39",
 	"@ai-sdk/svelte": "^3.0.39",
 	"@ai-sdk/react": "^2.0.39",
-	streamdown: "^1.2.0",
+	streamdown: "^1.3.0",
+	shiki: "^3.12.2",
 
 	"@orpc/server": "^1.8.6",
 	"@orpc/client": "^1.8.6",
@@ -151,7 +152,7 @@ export const dependencyVersionMap = {
 	"@sveltejs/adapter-cloudflare": "^7.2.1",
 	"@cloudflare/workers-types": "^4.20250822.0",
 
-	alchemy: "^0.65.1",
+	alchemy: "^0.67.0",
 	// temporary workaround for alchemy + tanstack start
 	nitropack: "^2.12.4",
 
