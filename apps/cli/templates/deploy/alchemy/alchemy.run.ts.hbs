@@ -172,11 +172,25 @@ export const server = await Worker("server", {
     BETTER_AUTH_SECRET: alchemy.secret(process.env.BETTER_AUTH_SECRET),
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL || "",
     {{/if}}
+    {{#if (eq auth "clerk")}}
+    CLERK_SECRET_KEY: alchemy.secret(process.env.CLERK_SECRET_KEY),
+    {{/if}}
     {{#if (includes examples "ai")}}
     GOOGLE_GENERATIVE_AI_API_KEY: alchemy.secret(process.env.GOOGLE_GENERATIVE_AI_API_KEY),
     {{/if}}
+    {{#if (eq payments "polar")}}
+    POLAR_ACCESS_TOKEN: alchemy.secret(process.env.POLAR_ACCESS_TOKEN),
+    POLAR_SUCCESS_URL: process.env.POLAR_SUCCESS_URL || "",
+    {{/if}}
     {{#if (eq dbSetup "turso")}}
     DATABASE_AUTH_TOKEN: alchemy.secret(process.env.DATABASE_AUTH_TOKEN),
+    {{/if}}
+    {{#if (eq database "mysql")}}
+    {{#if (eq orm "drizzle")}}
+    DATABASE_HOST: process.env.DATABASE_HOST || "",
+    DATABASE_USERNAME: process.env.DATABASE_USERNAME || "",
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD || "",
+    {{/if}}
     {{/if}}
   },
   dev: {
