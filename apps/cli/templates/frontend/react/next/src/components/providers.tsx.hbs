@@ -28,7 +28,9 @@ import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./ui/sonner";
 
 {{#if (eq backend "convex")}}
-const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!, {
+	expectAuth: true,
+});
 {{/if}}
 
 export default function Providers({

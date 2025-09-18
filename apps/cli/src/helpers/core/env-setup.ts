@@ -249,8 +249,8 @@ export async function setupEnvironmentVariables(config: ProjectConfig) {
 					)
 				) {
 					const convexCommands = `# Set Convex environment variables
-npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
-npx convex env set SITE_URL http://localhost:3001
+# npx convex env set BETTER_AUTH_SECRET=$(openssl rand -base64 32)
+# npx convex env set SITE_URL http://localhost:3001
 
 `;
 					await fs.appendFile(envLocalPath, convexCommands);
