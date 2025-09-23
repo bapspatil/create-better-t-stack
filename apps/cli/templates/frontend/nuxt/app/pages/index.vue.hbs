@@ -54,17 +54,6 @@ const healthCheck = useConvexQuery(api.healthCheck.get, {});
           {{else}}
             {{#unless (eq api "none")}}
             <div class="flex items-center gap-2">
-              <div
-                class="w-2 h-2 rounded-full"
-                :class="{
-                  'bg-yellow-500 animate-pulse': healthCheck.status.value === 'pending',
-                  'bg-green-500': healthCheck.status.value === 'success',
-                  'bg-red-500': healthCheck.status.value === 'error',
-                  'bg-gray-400': healthCheck.status.value !== 'pending' &&
-                                  healthCheck.status.value !== 'success' &&
-                                  healthCheck.status.value !== 'error'
-                }"
-              ></div>
               <span class="text-sm text-muted-foreground">
                 <template v-if="healthCheck.status.value === 'pending'">
                   Checking...

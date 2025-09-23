@@ -108,19 +108,19 @@ export const dependencyVersionMap = {
 
 	turbo: "^2.5.4",
 
-	ai: "^5.0.39",
+	ai: "^5.0.49",
 	"@ai-sdk/google": "^2.0.13",
-	"@ai-sdk/vue": "^2.0.39",
+    "@ai-sdk/vue": "^2.0.49",
 	"@ai-sdk/svelte": "^3.0.39",
 	"@ai-sdk/react": "^2.0.39",
 	streamdown: "^1.3.0",
 	shiki: "^3.12.2",
 
-	"@orpc/server": "^1.8.6",
-	"@orpc/client": "^1.8.6",
-	"@orpc/openapi": "^1.8.6",
-	"@orpc/zod": "^1.8.6",
-	"@orpc/tanstack-query": "^1.8.6",
+	"@orpc/server": "^1.9.0",
+	"@orpc/client": "^1.9.0",
+	"@orpc/openapi": "^1.9.0",
+	"@orpc/zod": "^1.9.0",
+	"@orpc/tanstack-query": "^1.9.0",
 
 	"@trpc/tanstack-react-query": "^11.5.0",
 	"@trpc/server": "^11.5.0",
@@ -136,8 +136,8 @@ export const dependencyVersionMap = {
 	"@tanstack/svelte-query": "^5.85.3",
 	"@tanstack/svelte-query-devtools": "^5.85.3",
 
-	"@tanstack/vue-query-devtools": "^5.83.0",
-	"@tanstack/vue-query": "^5.83.0",
+	"@tanstack/vue-query-devtools": "^5.90.2",
+	"@tanstack/vue-query": "^5.90.2",
 
 	"@tanstack/react-query-devtools": "^5.85.5",
 	"@tanstack/react-query": "^5.85.5",
