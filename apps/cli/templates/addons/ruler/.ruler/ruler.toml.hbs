@@ -58,6 +58,16 @@ command = "npx"
 args = ["-y", "mongodb-mcp-server", "--connectionString", "mongodb://localhost:27017/myDatabase", "--readOnly"]
 {{/if}}
 
+{{#if (eq auth "better-auth")}}
+[mcp_servers.better-auth]
+url = "https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp"
+{{/if}}
+
+{{#if (includes frontend "nuxt")}}
+[mcp_servers.expo]
+url = "https://ui.nuxt.com/mcp"
+{{/if}}
+
 # --- Global .gitignore Configuration ---
 [gitignore]
 # Enable/disable automatic .gitignore updates (default: true)
