@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 export const DatabaseSchema = z
 	.enum(["none", "sqlite", "postgres", "mysql", "mongodb"])

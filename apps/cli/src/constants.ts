@@ -110,7 +110,7 @@ export const dependencyVersionMap = {
 
 	ai: "^5.0.49",
 	"@ai-sdk/google": "^2.0.13",
-    "@ai-sdk/vue": "^2.0.49",
+	"@ai-sdk/vue": "^2.0.49",
 	"@ai-sdk/svelte": "^3.0.39",
 	"@ai-sdk/react": "^2.0.39",
 	streamdown: "^1.3.0",

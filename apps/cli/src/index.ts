@@ -1,6 +1,7 @@
 import { intro, log } from "@clack/prompts";
+import { createRouterClient, os } from "@orpc/server";
 import pc from "picocolors";
-import { createCli, trpcServer } from "trpc-cli";
+import { createCli } from "trpc-cli";
 import z from "zod";
 import {
 	addAddonsHandler,
@@ -48,10 +49,8 @@ import { openUrl } from "./utils/open-url";
 import { renderTitle } from "./utils/render-title";
 import { displaySponsors, fetchSponsors } from "./utils/sponsors";
 
-const t = trpcServer.initTRPC.create();
-
-export const router = t.router({
-	init: t.procedure
+export const router = os.router({
+	init: os
 		.meta({
 			description: "Create a new Better-T-Stack project",
 			default: true,
@@ -111,7 +110,7 @@ export const router = t.router({
 				}),
 			]),
 		)
-		.mutation(async ({ input }) => {
+		.handler(async ({ input }) => {
 			const [projectName, options] = input;
 			const combinedInput = {
 				projectName,
@@ -123,7 +122,7 @@ export const router = t.router({
 				return result;
 			}
 		}),
-	add: t.procedure
+	add: os
 		.meta({
 			description:
 				"Add addons or deployment configurations to an existing Better-T-Stack project",
@@ -144,13 +143,13 @@ export const router = t.router({
 				}),
 			]),
 		)
-		.mutation(async ({ input }) => {
+		.handler(async ({ input }) => {
 			const [options] = input;
 			await addAddonsHandler(options);
 		}),
-	sponsors: t.procedure
+	sponsors: os
 		.meta({ description: "Show Better-T-Stack sponsors" })
-		.mutation(async () => {
+		.handler(async () => {
 			try {
 				renderTitle();
 				intro(pc.magenta("Better-T-Stack Sponsors"));
@@ -160,9 +159,9 @@ export const router = t.router({
 				handleError(error, "Failed to display sponsors");
 			}
 		}),
-	docs: t.procedure
+	docs: os
 		.meta({ description: "Open Better-T-Stack documentation" })
-		.mutation(async () => {
+		.handler(async () => {
 			const DOCS_URL = "https://better-t-stack.dev/docs";
 			try {
 				await openUrl(DOCS_URL);
@@ -171,9 +170,9 @@ export const router = t.router({
 				log.message(`Please visit ${DOCS_URL}`);
 			}
 		}),
-	builder: t.procedure
+	builder: os
 		.meta({ description: "Open the web-based stack builder" })
-		.mutation(async () => {
+		.handler(async () => {
 			const BUILDER_URL = "https://better-t-stack.dev/new";
 			try {
 				await openUrl(BUILDER_URL);
@@ -184,7 +183,7 @@ export const router = t.router({
 		}),
 });
 
-const caller = t.createCallerFactory(router)({});
+const caller = createRouterClient(router, { context: {} });
 
 export function createBtsCli() {
 	return createCli({
