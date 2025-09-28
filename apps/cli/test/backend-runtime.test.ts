@@ -215,9 +215,9 @@ describe("Backend and Runtime Combinations", () => {
 			expectSuccess(result);
 		});
 
-		it("should fail convex with better-auth", async () => {
+		it("should work convex with better-auth (tanstack-router)", async () => {
 			const result = await runTRPCTest({
-				projectName: "convex-better-auth",
+				projectName: "convex-better-auth-success",
 				backend: "convex",
 				runtime: "none",
 				database: "none",
@@ -230,10 +230,9 @@ describe("Backend and Runtime Combinations", () => {
 				dbSetup: "none",
 				webDeploy: "none",
 				serverDeploy: "none",
-				expectError: true,
 			});
 
-			expectError(result, "Better-Auth is not compatible with Convex backend");
+			expectSuccess(result);
 		});
 
 		it("should fail convex with database", async () => {

@@ -22,11 +22,11 @@
 		"deploy": "bun run deploy:web"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.0",
-		"@types/bun": "latest",
+		"@biomejs/biome": "2.2.4",
+		"@types/bun": "^1.2.22",
 		"changelogithub": "^13.16.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.1.5",
+		"lint-staged": "^16.2.1",
 		"turbo": "^2.5.8",
 		"typescript": "5.9.2"
 	},

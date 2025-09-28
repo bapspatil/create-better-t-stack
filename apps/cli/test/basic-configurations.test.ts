@@ -98,7 +98,7 @@ describe("Basic Configurations", () => {
 
 			expectSuccess(result);
 			expect(result.result?.projectConfig.install).toBe(true);
-		});
+		}, 300000); // 5 minute timeout for install test
 
 		it("should work with install disabled", async () => {
 			const result = await runTRPCTest({
@@ -145,7 +145,7 @@ describe("Basic Configurations", () => {
 				expectError: true,
 			});
 
-			expectError(result, "invalid characters");
+			expectError(result, "Input validation failed");
 		});
 
 		it("should fail when combining --yes with configuration flags", async () => {

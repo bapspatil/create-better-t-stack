@@ -98,9 +98,9 @@ describe("Authentication Configurations", () => {
 			expectError(result, "Authentication requires a database");
 		});
 
-		it("should fail with better-auth + convex backend", async () => {
+		it("should work with better-auth + convex backend (tanstack-router)", async () => {
 			const result = await runTRPCTest({
-				projectName: "better-auth-convex-fail",
+				projectName: "better-auth-convex-success",
 				auth: "better-auth",
 				backend: "convex",
 				runtime: "none",
@@ -113,10 +113,9 @@ describe("Authentication Configurations", () => {
 				dbSetup: "none",
 				webDeploy: "none",
 				serverDeploy: "none",
-				expectError: true,
 			});
 
-			expectError(result, "Better-Auth is not compatible with Convex backend");
+			expectSuccess(result);
 		});
 
 		it("should work with better-auth + all compatible frontends", async () => {

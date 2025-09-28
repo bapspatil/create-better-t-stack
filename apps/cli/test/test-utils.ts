@@ -1,7 +1,7 @@
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
+import { createRouterClient } from "@orpc/server";
 import { ensureDir } from "fs-extra";
-import { trpcServer } from "trpc-cli";
 import { expect } from "vitest";
 import { router } from "../src/index";
 import type { CreateInput, InitResult } from "../src/types";
@@ -16,13 +16,13 @@ import {
 	FrontendSchema,
 	ORMSchema,
 	PackageManagerSchema,
+	PaymentsSchema,
 	RuntimeSchema,
 	ServerDeploySchema,
 	WebDeploySchema,
 } from "../src/types";
 
-// Create tRPC caller for direct function calls instead of subprocess
-const t = trpcServer.initTRPC.create();
+// Create oRPC caller for direct function calls instead of subprocess
 const defaultContext = {};
 
 /**
@@ -65,7 +65,7 @@ export async function runTRPCTest(config: TestConfig): Promise<TestResult> {
 		// Set programmatic mode to ensure errors are thrown instead of process.exit
 		process.env.BTS_PROGRAMMATIC = "1";
 
-		const caller = t.createCallerFactory(router)(defaultContext);
+		const caller = createRouterClient(router, { context: defaultContext });
 		const projectName = config.projectName || "default-app";
 		const projectPath = join(smokeDir, projectName);
 
@@ -80,6 +80,7 @@ export async function runTRPCTest(config: TestConfig): Promise<TestResult> {
 			"addons",
 			"examples",
 			"auth",
+			"payments",
 			"dbSetup",
 			"api",
 			"webDeploy",
@@ -105,6 +106,7 @@ export async function runTRPCTest(config: TestConfig): Promise<TestResult> {
 					database: "sqlite" as Database,
 					orm: "drizzle" as ORM,
 					auth: "none" as Auth,
+					payments: "none" as Payments,
 					addons: ["none"] as Addons[],
 					examples: ["none"] as Examples[],
 					dbSetup: "none" as DatabaseSetup,
@@ -117,7 +119,7 @@ export async function runTRPCTest(config: TestConfig): Promise<TestResult> {
 			renderTitle: false,
 			install: config.install ?? false,
 			git: config.git ?? true,
-			packageManager: config.packageManager ?? "bun",
+			packageManager: config.packageManager ?? "pnpm",
 			directoryConflict: "overwrite",
 			verbose: true, // Need verbose to get the result
 			disableAnalytics: true,
@@ -202,6 +204,7 @@ export type Frontend = (typeof FrontendSchema)["options"][number];
 export type Addons = (typeof AddonsSchema)["options"][number];
 export type Examples = (typeof ExamplesSchema)["options"][number];
 export type Auth = (typeof AuthSchema)["options"][number];
+export type Payments = (typeof PaymentsSchema)["options"][number];
 export type API = (typeof APISchema)["options"][number];
 export type WebDeploy = (typeof WebDeploySchema)["options"][number];
 export type ServerDeploy = (typeof ServerDeploySchema)["options"][number];
@@ -217,6 +220,7 @@ export const FRONTENDS = extractEnumValues(FrontendSchema);
 export const ADDONS = extractEnumValues(AddonsSchema);
 export const EXAMPLES = extractEnumValues(ExamplesSchema);
 export const AUTH_PROVIDERS = extractEnumValues(AuthSchema);
+export const PAYMENTS_PROVIDERS = extractEnumValues(PaymentsSchema);
 export const API_TYPES = extractEnumValues(APISchema);
 export const WEB_DEPLOYS = extractEnumValues(WebDeploySchema);
 export const SERVER_DEPLOYS = extractEnumValues(ServerDeploySchema);
