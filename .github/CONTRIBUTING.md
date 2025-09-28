@@ -15,7 +15,7 @@ This repository is organized as a monorepo containing:
 
 ### Prerequisites
 
-- Node.js 20+ 
+- Node.js (lts)
 - Bun (recommended)
 - Git
 
