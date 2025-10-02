@@ -45,7 +45,7 @@ export const dependencyVersionMap = {
 
 	"@clerk/nextjs": "^6.31.5",
 	"@clerk/clerk-react": "^5.45.0",
-	"@clerk/tanstack-react-start": "^0.23.1",
+	"@clerk/tanstack-react-start": "^0.25.1",
 	"@clerk/clerk-expo": "^2.14.25",
 
 	"drizzle-orm": "^0.44.2",
@@ -146,14 +146,14 @@ export const dependencyVersionMap = {
 	"@tanstack/solid-query-devtools": "^5.87.4",
 	"@tanstack/solid-router-devtools": "^1.131.44",
 
-	wrangler: "^4.23.0",
-	"@cloudflare/vite-plugin": "^1.9.0",
+	wrangler: "^4.40.3",
+	"@cloudflare/vite-plugin": "^1.13.8",
 	"@opennextjs/cloudflare": "^1.6.5",
 	"nitro-cloudflare-dev": "^0.2.2",
 	"@sveltejs/adapter-cloudflare": "^7.2.1",
 	"@cloudflare/workers-types": "^4.20250822.0",
 
-	alchemy: "^0.67.0",
+	alchemy: "^0.70.0",
 	// temporary workaround for alchemy + tanstack start
 	nitropack: "^2.12.4",
 

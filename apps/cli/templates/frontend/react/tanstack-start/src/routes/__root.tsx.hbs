@@ -30,24 +30,24 @@ import Loader from "@/components/loader";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import { getAuth } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
+import { getRequest } from "@tanstack/react-start/server";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 
 const fetchClerkAuth = createServerFn({ method: "GET" }).handler(async () => {
-  const auth = await getAuth(getWebRequest());
+  const auth = await getAuth(getRequest());
   const token = await auth.getToken({ template: "convex" });
   return { userId: auth.userId, token };
 });
 {{else if (and (eq backend "convex") (eq auth "better-auth"))}}
 import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest, getCookie } from "@tanstack/react-start/server";
+import { getRequest, getCookie } from "@tanstack/react-start/server";
 import { ConvexBetterAuthProvider } from "@convex-dev/better-auth/react";
 import { fetchSession, getCookieName } from "@convex-dev/better-auth/react-start";
 import { authClient } from "@/lib/auth-client";
 import { createAuth } from "@{{projectName}}/backend/convex/auth";
 
 const fetchAuth = createServerFn({ method: "GET" }).handler(async () => {
-  const { session } = await fetchSession(getWebRequest());
+  const { session } = await fetchSession(getRequest());
   const sessionCookieName = getCookieName(createAuth);
   const token = getCookie(sessionCookieName);
   return {

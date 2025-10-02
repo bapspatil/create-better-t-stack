@@ -18,7 +18,7 @@ export async function setupTanstackStartWorkersDeploy(
 	if (!(await fs.pathExists(webAppDir))) return;
 
 	await addPackageDependency({
-		devDependencies: ["wrangler"],
+		devDependencies: ["wrangler", "@cloudflare/vite-plugin"],
 		projectDir: webAppDir,
 	});
 
@@ -38,6 +38,18 @@ export async function setupTanstackStartWorkersDeploy(
 
 	const sourceFile = tsProject.addSourceFileAtPathIfExists(viteConfigPath);
 	if (!sourceFile) return;
+
+	const cfImport = sourceFile.getImportDeclaration("@cloudflare/vite-plugin");
+	if (!cfImport) {
+		sourceFile.addImportDeclaration({
+			moduleSpecifier: "@cloudflare/vite-plugin",
+			namedImports: [{ name: "cloudflare" }],
+		});
+	} else if (
+		!cfImport.getNamedImports().some((ni) => ni.getName() === "cloudflare")
+	) {
+		cfImport.addNamedImport({ name: "cloudflare" });
+	}
 
 	const reactImport = sourceFile.getImportDeclaration("@vitejs/plugin-react");
 	let reactPluginIdentifier = "viteReact";
@@ -73,19 +85,14 @@ export async function setupTanstackStartWorkersDeploy(
 
 	const pluginsArray = ensureArrayProperty(configObj, "plugins");
 
-	const tanstackPluginIndex = pluginsArray
+	const hasCloudflare = pluginsArray
 		.getElements()
-		.findIndex((el) => el.getText().includes("tanstackStart("));
-
-	const tanstackPluginText =
-		'tanstackStart({ target: "cloudflare-module", customViteReactPlugin: true })';
-
-	if (tanstackPluginIndex === -1) {
-		pluginsArray.addElement(tanstackPluginText);
-	} else {
-		pluginsArray
-			.getElements()
-			[tanstackPluginIndex].replaceWithText(tanstackPluginText);
+		.some((el) => el.getText().includes("cloudflare("));
+	if (!hasCloudflare) {
+		pluginsArray.insertElement(
+			0,
+			"cloudflare({ viteEnvironment: { name: 'ssr' } })",
+		);
 	}
 
 	const hasReactPlugin = pluginsArray
