@@ -23,10 +23,14 @@ export default function StatsSection({
 		lastUpdated: string | null;
 	};
 }) {
-	const githubRepo = useQuery(api.stats.getGithubRepo, {
+
+	// no idea why there are no types 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const githubRepo = useQuery((api as any).stats.getGithubRepo, {
 		name: "AmanVarshney01/create-better-t-stack",
 	});
-	const npmPackages = useQuery(api.stats.getNpmPackages, {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const npmPackages = useQuery((api as any).stats.getNpmPackages, {
 		names: ["create-better-t-stack"],
 	});
 
@@ -188,7 +192,7 @@ export default function StatsSection({
 							<span className="font-mono text-foreground text-sm">
 								{npmPackages?.dayOfWeekAverages
 									? Math.round(
-											npmPackages.dayOfWeekAverages.reduce((a, b) => a + b, 0) /
+											npmPackages.dayOfWeekAverages.reduce((a: number, b: number) => a + b, 0) /
 												7,
 										)
 									: "—"}
