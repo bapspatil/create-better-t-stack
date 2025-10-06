@@ -1,4 +1,3 @@
-{{#if (eq backend "self")}}
 import { redirect } from "next/navigation";
 import Dashboard from "./dashboard";
 import { headers } from "next/headers";
@@ -27,42 +26,3 @@ export default async function DashboardPage() {
 		</div>
 	);
 }
-{{else}}
-import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
-import Dashboard from "./dashboard";
-import { headers } from "next/headers";
-
-export default async function DashboardPage() {
-	const session = await authClient.getSession({
-		fetchOptions: {
-			headers: await headers()
-		}
-	});
-
-	if (!session.data) {
-		redirect("/login");
-	}
-
-	{{#if (eq payments "polar")}}
-	const { data: customerState, error } = await authClient.customer.state({
-		fetchOptions: {
-			headers: await headers()
-		}
-	});
-	{{/if}}
-
-	return (
-		<div>
-			<h1>Dashboard</h1>
-			<p>Welcome {session.data.user.name}</p>
-			<Dashboard 
-				session={session.data}
-				{{#if (eq payments "polar")}}
-				customerState={customerState}
-				{{/if}}
-			/>
-		</div>
-	);
-}
-{{/if}}

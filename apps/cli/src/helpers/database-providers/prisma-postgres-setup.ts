@@ -40,9 +40,7 @@ async function setupWithCreateDb(
 	orm: ORM,
 ) {
 	try {
-		log.info(
-			"Starting Prisma Postgres setup with create-db. Please follow the instructions below:",
-		);
+		log.info("Starting Prisma Postgres setup with create-db.");
 
 		const selectedRegion = await select({
 			message: "Select your preferred region:",
