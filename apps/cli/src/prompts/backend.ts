@@ -3,6 +3,14 @@ import { DEFAULT_CONFIG } from "../constants";
 import type { Backend, Frontend } from "../types";
 import { exitCancelled } from "../utils/errors";
 
+// Temporarily restrict to Next.js only for backend="self"
+const FULLSTACK_FRONTENDS: readonly Frontend[] = [
+	"next",
+	// "nuxt",      // TODO: Add support in future update
+	// "svelte",    // TODO: Add support in future update
+	// "tanstack-start", // TODO: Add support in future update
+] as const;
+
 export async function getBackendFrameworkChoice(
 	backendFramework?: Backend,
 	frontends?: Frontend[],
@@ -10,21 +18,29 @@ export async function getBackendFrameworkChoice(
 	if (backendFramework !== undefined) return backendFramework;
 
 	const hasIncompatibleFrontend = frontends?.some((f) => f === "solid");
+	const hasFullstackFrontend = frontends?.some((f) =>
+		FULLSTACK_FRONTENDS.includes(f),
+	);
 
 	const backendOptions: Array<{
 		value: Backend;
 		label: string;
 		hint: string;
-	}> = [
+	}> = [];
+
+	if (hasFullstackFrontend) {
+		backendOptions.push({
+			value: "self" as const,
+			label: "Self (Fullstack)",
+			hint: "Use frontend's built-in api routes",
+		});
+	}
+
+	backendOptions.push(
 		{
 			value: "hono" as const,
 			label: "Hono",
 			hint: "Lightweight, ultrafast web framework",
-		},
-		{
-			value: "next" as const,
-			label: "Next.js",
-			hint: "separate api routes only backend",
 		},
 		{
 			value: "express" as const,
@@ -41,7 +57,7 @@ export async function getBackendFrameworkChoice(
 			label: "Elysia",
 			hint: "Ergonomic web framework for building backend servers",
 		},
-	];
+	);
 
 	if (!hasIncompatibleFrontend) {
 		backendOptions.push({
@@ -60,7 +76,7 @@ export async function getBackendFrameworkChoice(
 	const response = await select<Backend>({
 		message: "Select backend",
 		options: backendOptions,
-		initialValue: DEFAULT_CONFIG.backend,
+		initialValue: hasFullstackFrontend ? "self" : DEFAULT_CONFIG.backend,
 	});
 
 	if (isCancel(response)) return exitCancelled("Operation cancelled");

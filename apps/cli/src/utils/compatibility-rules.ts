@@ -43,6 +43,54 @@ export function ensureSingleWebAndNative(frontends: Frontend[]) {
 	}
 }
 
+// Temporarily restrict to Next.js only for backend="self"
+const FULLSTACK_FRONTENDS: readonly Frontend[] = [
+	"next",
+	// "nuxt",      // TODO: Add support in future update
+	// "svelte",    // TODO: Add support in future update
+	// "tanstack-start", // TODO: Add support in future update
+] as const;
+
+export function validateSelfBackendCompatibility(
+	providedFlags: Set<string>,
+	options: CLIInput,
+	config: Partial<ProjectConfig>,
+) {
+	const backend = config.backend || options.backend;
+	const frontends = config.frontend || options.frontend || [];
+
+	if (backend === "self") {
+		const { web, native } = splitFrontends(frontends);
+		const hasSupportedWeb =
+			web.length === 1 && FULLSTACK_FRONTENDS.includes(web[0]);
+
+		if (!hasSupportedWeb) {
+			exitWithError(
+				"Backend 'self' (fullstack) currently only supports Next.js frontend. Please use --frontend next. Support for Nuxt, SvelteKit, and TanStack Start will be added in a future update.",
+			);
+		}
+
+		if (native.length > 1) {
+			exitWithError(
+				"Cannot select multiple native frameworks. Choose only one of: native-nativewind, native-unistyles",
+			);
+		}
+	}
+
+	const hasFullstackFrontend = frontends.some((f) =>
+		FULLSTACK_FRONTENDS.includes(f),
+	);
+	if (
+		providedFlags.has("backend") &&
+		!hasFullstackFrontend &&
+		backend === "self"
+	) {
+		exitWithError(
+			"Backend 'self' (fullstack) currently only supports Next.js frontend. Please use --frontend next or choose a different backend. Support for Nuxt, SvelteKit, and TanStack Start will be added in a future update.",
+		);
+	}
+}
+
 export function validateWorkersCompatibility(
 	providedFlags: Set<string>,
 	options: CLIInput,

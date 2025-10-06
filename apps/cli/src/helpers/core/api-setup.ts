@@ -206,29 +206,37 @@ export async function setupApi(config: ProjectConfig) {
 
 	const webDirExists = await fs.pathExists(webDir);
 	const nativeDirExists = await fs.pathExists(nativeDir);
-	const serverDirExists = await fs.pathExists(serverDir);
+	const _serverDirExists = await fs.pathExists(serverDir);
 
 	const frontendType = getFrontendType(frontend);
 
 	if (!isConvex && api !== "none") {
 		const apiDeps = getApiDependencies(api, frontendType);
+		const apiPackageDir = path.join(projectDir, "packages/api");
 
-		if (serverDirExists && apiDeps.server) {
+		if (apiDeps.server) {
 			await addPackageDependency({
 				dependencies: apiDeps.server.dependencies as AvailableDependencies[],
-				projectDir: serverDir,
+				projectDir: apiPackageDir,
 			});
 
-			if (api === "trpc") {
-				if (backend === "hono") {
+			if (backend === "self" && webDirExists) {
+				await addPackageDependency({
+					dependencies: apiDeps.server.dependencies as AvailableDependencies[],
+					projectDir: webDir,
+				});
+			}
+
+			if (backend === "self") {
+				const frameworkDeps: AvailableDependencies[] = [];
+				if (frontend.includes("next")) {
+					frameworkDeps.push("next");
+				}
+
+				if (frameworkDeps.length > 0) {
 					await addPackageDependency({
-						dependencies: ["@hono/trpc-server"],
-						projectDir: serverDir,
-					});
-				} else if (backend === "elysia") {
-					await addPackageDependency({
-						dependencies: ["@elysiajs/trpc"],
-						projectDir: serverDir,
+						dependencies: frameworkDeps,
+						projectDir: apiPackageDir,
 					});
 				}
 			}
