@@ -66,7 +66,7 @@ export function generateStackCommand(stack: StackState) {
 	const projectName = stack.projectName || "my-better-t-app";
 
 	const isStackDefaultExceptProjectName = Object.entries(DEFAULT_STACK).every(
-		([key, _defaultValue]) =>
+		([key]) =>
 			key === "projectName" ||
 			isStackDefault(
 				stack,

@@ -96,6 +96,7 @@ export const filterCurrentSponsors = (sponsors: Sponsor[]): Sponsor[] => {
 
 export const filterPastSponsors = (_sponsors: Sponsor[]): Sponsor[] => {
 	// Past sponsors are handled separately in the new structure
+	void _sponsors;
 	return [];
 };
 

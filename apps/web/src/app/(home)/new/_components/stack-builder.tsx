@@ -51,6 +51,10 @@ import {
 } from "./utils";
 import { YoloToggle } from "./yolo-toggle";
 
+function formatProjectName(name: string): string {
+	return name.replace(/\s+/g, "-");
+}
+
 const StackBuilder = () => {
 	const [stack, setStack] = useStackState();
 
@@ -68,10 +72,6 @@ const StackBuilder = () => {
 	const compatibilityAnalysis = analyzeStackCompatibility(stack);
 
 	const projectNameError = validateProjectName(stack.projectName || "");
-
-	const formatProjectName = (name: string): string => {
-		return name.replace(/\s+/g, "-");
-	};
 
 	const getStackUrl = (): string => {
 		const stackToUse = compatibilityAnalysis.adjustedStack || stack;
@@ -264,8 +264,7 @@ const StackBuilder = () => {
 		};
 		const cmd = generateStackCommand(stackWithProjectName);
 		setCommand(cmd);
-		// biome-ignore lint/correctness/useExhaustiveDependencies: let it be
-	}, [stack, compatibilityAnalysis.adjustedStack, formatProjectName]);
+	}, [stack, compatibilityAnalysis.adjustedStack]);
 
 	const handleTechSelect = (
 		category: keyof typeof TECH_OPTIONS,
