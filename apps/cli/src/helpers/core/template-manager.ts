@@ -1094,10 +1094,14 @@ export async function setupDeploymentTemplates(
 			(context.serverDeploy === "alchemy" || isBackendSelf)
 		) {
 			if (await fs.pathExists(alchemyTemplateSrc)) {
+				const webAppDir = path.join(projectDir, "apps/web");
+				const destDir = isBackendSelf && (await fs.pathExists(webAppDir))
+					? webAppDir
+					: projectDir;
 				await processAndCopyFiles(
 					"alchemy.run.ts.hbs",
 					alchemyTemplateSrc,
-					projectDir,
+					destDir,
 					context,
 				);
 
