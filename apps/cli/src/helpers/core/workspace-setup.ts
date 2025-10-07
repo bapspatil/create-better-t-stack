@@ -70,7 +70,6 @@ export async function setupWorkspaceDependencies(
 
 		webDeps[`@${projectName}/api`] = workspaceVersion;
 		webDeps[`@${projectName}/auth`] = workspaceVersion;
-		webDeps[`@${projectName}/db`] = workspaceVersion;
 
 		if (Object.keys(webDeps).length > 0) {
 			await addPackageDependency({
