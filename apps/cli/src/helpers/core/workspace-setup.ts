@@ -51,14 +51,21 @@ export async function setupWorkspaceDependencies(
 
 	const serverPackageDir = path.join(projectDir, "apps/server");
 	if (await fs.pathExists(serverPackageDir)) {
+		const serverDeps: Record<string, string> = {};
+		if (await fs.pathExists(apiPackageDir)) {
+			serverDeps[`@${projectName}/api`] = workspaceVersion;
+		}
+		if (await fs.pathExists(authPackageDir)) {
+			serverDeps[`@${projectName}/auth`] = workspaceVersion;
+		}
+		if (await fs.pathExists(dbPackageDir)) {
+			serverDeps[`@${projectName}/db`] = workspaceVersion;
+		}
+
 		await addPackageDependency({
 			dependencies: commonDeps,
 			devDependencies: commonDevDeps,
-			customDependencies: {
-				[`@${projectName}/api`]: workspaceVersion,
-				[`@${projectName}/auth`]: workspaceVersion,
-				[`@${projectName}/db`]: workspaceVersion,
-			},
+			customDependencies: serverDeps,
 			projectDir: serverPackageDir,
 		});
 	}
@@ -67,9 +74,12 @@ export async function setupWorkspaceDependencies(
 
 	if (await fs.pathExists(webPackageDir)) {
 		const webDeps: Record<string, string> = {};
-
-		webDeps[`@${projectName}/api`] = workspaceVersion;
-		webDeps[`@${projectName}/auth`] = workspaceVersion;
+		if (await fs.pathExists(apiPackageDir)) {
+			webDeps[`@${projectName}/api`] = workspaceVersion;
+		}
+		if (await fs.pathExists(authPackageDir)) {
+			webDeps[`@${projectName}/auth`] = workspaceVersion;
+		}
 
 		if (Object.keys(webDeps).length > 0) {
 			await addPackageDependency({
@@ -83,8 +93,9 @@ export async function setupWorkspaceDependencies(
 
 	if (await fs.pathExists(nativePackageDir)) {
 		const nativeDeps: Record<string, string> = {};
-
-		nativeDeps[`@${projectName}/api`] = workspaceVersion;
+		if (await fs.pathExists(apiPackageDir)) {
+			nativeDeps[`@${projectName}/api`] = workspaceVersion;
+		}
 
 		if (Object.keys(nativeDeps).length > 0) {
 			await addPackageDependency({
