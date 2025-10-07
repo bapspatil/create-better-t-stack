@@ -50,7 +50,7 @@ export async function createProject(
 
 		await setupBackendFramework(projectDir, options);
 
-		if (needsServerSetup) {
+		if (needsServerSetup || (isSelfBackend && options.dbSetup === "docker")) {
 			await setupDockerComposeTemplates(projectDir, options);
 		}
 
