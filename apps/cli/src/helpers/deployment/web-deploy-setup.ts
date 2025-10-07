@@ -98,15 +98,8 @@ async function setupWorkersWebDeploy(
 }
 
 async function addAlchemyPackagesDependencies(projectDir: string) {
-	const packages = ["packages/api", "packages/auth", "packages/db"];
-
-	for (const packageName of packages) {
-		const packageDir = path.join(projectDir, packageName);
-		if (await fs.pathExists(packageDir)) {
-			await addPackageDependency({
-				devDependencies: ["@cloudflare/workers-types"],
-				projectDir: packageDir,
-			});
-		}
-	}
+	await addPackageDependency({
+		devDependencies: ["@cloudflare/workers-types"],
+		projectDir,
+	});
 }

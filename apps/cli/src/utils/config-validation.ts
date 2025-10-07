@@ -446,6 +446,16 @@ export function validateFullConfig(
 		);
 	}
 
+	if (
+		providedFlags.has("serverDeploy") &&
+		(config.serverDeploy === "alchemy" || config.serverDeploy === "wrangler") &&
+		config.runtime !== "workers"
+	) {
+		exitWithError(
+			`Server deployment '${config.serverDeploy}' requires '--runtime workers'. Please use '--runtime workers' or choose a different server deployment.`,
+		);
+	}
+
 	if (config.addons && config.addons.length > 0) {
 		validateAddonsAgainstFrontends(config.addons, config.frontend, config.auth);
 		config.addons = [...new Set(config.addons)];

@@ -23,8 +23,7 @@ export default function StatsSection({
 		lastUpdated: string | null;
 	};
 }) {
-
-	// no idea why there are no types 
+	// no idea why there are no types
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const githubRepo = useQuery((api as any).stats.getGithubRepo, {
 		name: "AmanVarshney01/create-better-t-stack",
@@ -192,8 +191,10 @@ export default function StatsSection({
 							<span className="font-mono text-foreground text-sm">
 								{npmPackages?.dayOfWeekAverages
 									? Math.round(
-											npmPackages.dayOfWeekAverages.reduce((a: number, b: number) => a + b, 0) /
-												7,
+											npmPackages.dayOfWeekAverages.reduce(
+												(a: number, b: number) => a + b,
+												0,
+											) / 7,
 										)
 									: "—"}
 							</span>
