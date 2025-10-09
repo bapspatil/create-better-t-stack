@@ -17,32 +17,41 @@ Not collected:
 - Project name, path, or file contents (explicitly omitted)
 - Secrets or environment variables from your machine
 
- 
-
 ## Disable telemetry
 
 Telemetry is enabled by default. To disable:
 
-<Tabs items={['bun', 'pnpm', 'npm']}>
-  <Tab value="bun">
+<Tabs groupId="installtab" defaultValue="npm" persist>
+  <TabsList>
+    <TabsTrigger value="npm">
+      npm
+    </TabsTrigger>
+    <TabsTrigger value="pnpm">
+      pnpm
+    </TabsTrigger>
+    <TabsTrigger value="bun">
+      bun
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="npm">
     ```bash
-    # Disable for a single run
-    BTS_TELEMETRY_DISABLED=1 bun create better-t-stack@latest
-    ```
-  </Tab>
-  <Tab value="pnpm">
-    ```bash
-    # Disable for a single run
-    BTS_TELEMETRY_DISABLED=1 pnpm create better-t-stack@latest
-    ```
-  </Tab>
-  <Tab value="npm">
-    ```bash
-    # Disable for a single run
     BTS_TELEMETRY_DISABLED=1 npx create-better-t-stack@latest
     ```
-  </Tab>
+  </TabsContent>
+  <TabsContent value="pnpm">
+    ```bash
+    BTS_TELEMETRY_DISABLED=1 pnpm create better-t-stack@latest
+    ```
+  </TabsContent>
+  <TabsContent value="bun">
+    ```bash
+    BTS_TELEMETRY_DISABLED=1 bun create better-t-stack@latest
+    ```
+  </TabsContent>
 </Tabs>
+
+<Callout title="Note">The above commands disable it for a single run.</Callout>
+
 
 Add `export BTS_TELEMETRY_DISABLED=1` to your shell profile to make it permanent.
 
