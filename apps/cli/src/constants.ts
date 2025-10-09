@@ -133,7 +133,7 @@ export const dependencyVersionMap = {
 	"convex-svelte": "^0.0.11",
 	"convex-nuxt": "0.1.5",
 	"convex-vue": "^0.1.5",
-	"@convex-dev/better-auth": "^0.8.4",
+	"@convex-dev/better-auth": "^0.9.1",
 
 	"@tanstack/svelte-query": "^5.85.3",
 	"@tanstack/svelte-query-devtools": "^5.85.3",

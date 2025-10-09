@@ -53,7 +53,7 @@ export async function setupAuth(config: ProjectConfig) {
 				if (convexBackendDirExists) {
 					await addPackageDependency({
 						dependencies: ["better-auth", "@convex-dev/better-auth"],
-						customDependencies: { "better-auth": "1.3.8" },
+						customDependencies: { "better-auth": "1.3.27" },
 						projectDir: convexBackendDir,
 					});
 				}
@@ -68,19 +68,19 @@ export async function setupAuth(config: ProjectConfig) {
 					if (hasNextJs) {
 						await addPackageDependency({
 							dependencies: ["better-auth", "@convex-dev/better-auth"],
-							customDependencies: { "better-auth": "1.3.8" },
+							customDependencies: { "better-auth": "1.3.27" },
 							projectDir: clientDir,
 						});
 					} else if (hasTanStackStart) {
 						await addPackageDependency({
 							dependencies: ["better-auth", "@convex-dev/better-auth"],
-							customDependencies: { "better-auth": "1.3.8" },
+							customDependencies: { "better-auth": "1.3.27" },
 							projectDir: clientDir,
 						});
 					} else if (hasViteReactOther) {
 						await addPackageDependency({
 							dependencies: ["better-auth", "@convex-dev/better-auth"],
-							customDependencies: { "better-auth": "1.3.8" },
+							customDependencies: { "better-auth": "1.3.27" },
 							projectDir: clientDir,
 						});
 					}
