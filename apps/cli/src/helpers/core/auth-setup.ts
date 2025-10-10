@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import pc from "picocolors";
 import type { ProjectConfig } from "../../types";
 import { addPackageDependency } from "../../utils/add-package-deps";
+import { setupBetterAuthPlugins } from "../../utils/better-auth-plugin-setup";
 
 export async function setupAuth(config: ProjectConfig) {
 	const { auth, frontend, backend, projectDir } = config;
@@ -150,6 +151,10 @@ export async function setupAuth(config: ProjectConfig) {
 					});
 				}
 			}
+		}
+
+		if (authPackageDirExists && auth === "better-auth") {
+			await setupBetterAuthPlugins(projectDir, config);
 		}
 	} catch (error) {
 		consola.error(pc.red("Failed to configure authentication dependencies"));

@@ -10,7 +10,6 @@ export async function setupBetterAuthPlugins(
 	const authIndexFile = tsProject.addSourceFileAtPath(authIndexPath);
 
 	if (!authIndexFile) {
-		console.warn("Better Auth index file not found, skipping plugin setup");
 		return;
 	}
 
