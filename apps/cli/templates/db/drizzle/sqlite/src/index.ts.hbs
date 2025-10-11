@@ -1,4 +1,12 @@
 {{#if (or (eq runtime "bun") (eq runtime "node") (eq runtime "none"))}}
+{{#if (and (ne backend "self") (includes frontend "next"))}}
+import dotenv from "dotenv";
+
+dotenv.config({
+	path: "../../apps/server/.env",
+});
+
+{{/if}}
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 

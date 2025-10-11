@@ -26,6 +26,11 @@ export async function setupBetterAuthPlugins(
 		);
 	}
 
+	if (config.backend === "self" && config.frontend?.includes("next")) {
+		pluginsToAdd.push("nextCookies()");
+		importsToAdd.push('import { nextCookies } from "better-auth/next-js";');
+	}
+
 	if (
 		config.frontend?.includes("native-nativewind") ||
 		config.frontend?.includes("native-unistyles")

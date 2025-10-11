@@ -1,4 +1,12 @@
 {{#if (or (eq runtime "bun") (eq runtime "node") (eq runtime "none"))}}
+{{#if (and (ne backend "self") (includes frontend "next"))}}
+import dotenv from "dotenv";
+
+dotenv.config({
+	path: "../../apps/server/.env",
+});
+
+{{/if}}
 {{#if (eq dbSetup "neon")}}
 import { neon, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
