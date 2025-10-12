@@ -2,7 +2,6 @@ import { RootProvider } from "fumadocs-ui/provider";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
-import SearchDialog from "@/components/search";
 import { cn } from "@/lib/utils";
 import "./global.css";
 import Providers from "@/components/providers";
@@ -112,7 +111,6 @@ export default function Layout({ children }: { children: ReactNode }) {
 			<body>
 				<RootProvider
 					search={{
-						SearchDialog,
 						options: {
 							type: "static",
 						},
