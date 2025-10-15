@@ -1,13 +1,24 @@
 import { redirect } from "next/navigation";
 import Dashboard from "./dashboard";
 import { headers } from "next/headers";
+{{#if (eq backend "self")}}
 import { auth } from "@{{projectName}}/auth";
+{{/if}}
 import { authClient } from "@/lib/auth-client";
 
 export default async function DashboardPage() {
+	{{#if (eq backend "self")}}
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
+	{{else}}
+	const session = await authClient.getSession({
+		fetchOptions: {
+			headers: await headers(),
+			throw: true
+		}
+	});
+	{{/if}}
 
 	if (!session?.user) {
 		redirect("/login");
