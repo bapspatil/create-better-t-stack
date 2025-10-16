@@ -1,0 +1,21 @@
+{
+  "name": "@my-better-t-app/backend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "convex dev",
+    "dev:setup": "convex dev --configure --until-success"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "convex": "catalog:",
+    "better-auth": "catalog:",
+    "@convex-dev/better-auth": "catalog:",
+    "@convex-dev/polar": "^0.6.4"
+  }
+}

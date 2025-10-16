@@ -14,7 +14,6 @@ export async function getPaymentsChoice(
 
 	const isPolarCompatible =
 		auth === "better-auth" &&
-		backend !== "convex" &&
 		(frontends?.length === 0 || splitFrontends(frontends).web.length > 0);
 
 	if (!isPolarCompatible) {

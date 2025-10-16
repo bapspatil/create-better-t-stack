@@ -1,0 +1,36 @@
+{{{{raw}}}}import { CheckoutButton } from "@/components/checkout-button";
+import { CustomerPortalButton } from "@/components/customer-portal-link";
+
+export default function BillingPage() {
+  return (
+    <div className="container mx-auto max-w-4xl px-4 py-12">
+      <h1 className="text-3xl font-bold mb-8">Billing & Subscriptions</h1>
+
+      <div className="space-y-6">
+        <div className="border rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">Manage Subscription</h2>
+          <p className="text-muted-foreground mb-4">
+            View and manage your current subscription, update payment methods, or cancel your subscription.
+          </p>
+          <CustomerPortalButton className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md">
+            Open Customer Portal
+          </CustomerPortalButton>
+        </div>
+
+        <div className="border rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">Upgrade Plan</h2>
+          <p className="text-muted-foreground mb-4">
+            Upgrade to a premium plan to unlock additional features and benefits.
+          </p>
+          {/* TODO: Replace with your actual product IDs from Polar */}
+          <CheckoutButton
+            productIds={["product_id_1", "product_id_2"]}
+            className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md"
+          >
+            View Plans
+          </CheckoutButton>
+        </div>
+      </div>
+    </div>
+  );
+}{{{{/raw}}}}

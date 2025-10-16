@@ -1,0 +1,39 @@
+import { Polar } from "@convex-dev/polar";
+import { api, components } from "./_generated/api";
+
+export const polar = new Polar(components.polar, {
+  // Required: provide a function to get the current user's ID and email
+  getUserInfo: async (ctx) => {
+    const user = await ctx.runQuery(api.auth.getCurrentUser);
+    if (!user) {
+      throw new Error("Not authenticated");
+    }
+    return {
+      userId: user._id,
+      email: user.email,
+    };
+  },
+
+  // Optional: Configure static keys for referencing your products
+  // Replace these with your actual product IDs from Polar
+  products: {
+    // Example product configuration - customize based on your needs
+    // premiumMonthly: "product_id_from_polar",
+    // premiumYearly: "product_id_from_polar",
+  },
+
+  // Optional: Set Polar configuration directly in code
+  // organizationToken: process.env.POLAR_ORGANIZATION_TOKEN, // Defaults to POLAR_ORGANIZATION_TOKEN env var
+  // webhookSecret: process.env.POLAR_WEBHOOK_SECRET, // Defaults to POLAR_WEBHOOK_SECRET env var
+  // server: "sandbox", // Optional: "sandbox" or "production", defaults to POLAR_SERVER env var
+});
+
+// Export API functions from the Polar client
+export const {
+  changeCurrentSubscription,
+  cancelCurrentSubscription,
+  getConfiguredProducts,
+  listAllProducts,
+  generateCheckoutLink,
+  generateCustomerPortalUrl,
+} = polar.api();

@@ -1,0 +1,25 @@
+{{{{raw}}}}"use client";
+
+import { CustomerPortalLink } from "@convex-dev/polar/react";
+import { api } from "@/convex/_generated/api";
+
+interface CustomerPortalButtonProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function CustomerPortalButton({
+  children,
+  className,
+}: CustomerPortalButtonProps) {
+  return (
+    <CustomerPortalLink
+      polarApi={{
+        generateCustomerPortalUrl: api.polar.generateCustomerPortalUrl,
+      }}
+      className={className}
+    >
+      {children}
+    </CustomerPortalLink>
+  );
+}{{{{/raw}}}}

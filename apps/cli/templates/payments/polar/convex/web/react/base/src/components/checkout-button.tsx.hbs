@@ -1,0 +1,29 @@
+{{{{raw}}}}"use client";
+
+import { CheckoutLink } from "@convex-dev/polar/react";
+import { api } from "@/convex/_generated/api";
+
+interface CheckoutButtonProps {
+  productIds: string[];
+  children: React.ReactNode;
+  className?: string;
+  embed?: boolean;
+}
+
+export function CheckoutButton({
+  productIds,
+  children,
+  className,
+  embed = true,
+}: CheckoutButtonProps) {
+  return (
+    <CheckoutLink
+      polarApi={api.polar}
+      productIds={productIds}
+      embed={embed}
+      className={className}
+    >
+      {children}
+    </CheckoutLink>
+  );
+}{{{{/raw}}}}

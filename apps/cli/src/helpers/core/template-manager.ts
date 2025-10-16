@@ -688,9 +688,27 @@ export async function setupPaymentsTemplate(
 
 	const serverAppDir = path.join(projectDir, "apps/server");
 	const webAppDir = path.join(projectDir, "apps/web");
+	const backendDir = path.join(projectDir, "packages/backend");
 
 	const serverAppDirExists = await fs.pathExists(serverAppDir);
 	const webAppDirExists = await fs.pathExists(webAppDir);
+	const backendDirExists = await fs.pathExists(backendDir);
+
+	// Handle Convex backend + Polar
+	if (context.backend === "convex" && backendDirExists) {
+		const convexPolarBackendSrc = path.join(
+			PKG_ROOT,
+			`templates/payments/${context.payments}/convex/backend`,
+		);
+		if (await fs.pathExists(convexPolarBackendSrc)) {
+			await processAndCopyFiles(
+				"**/*",
+				convexPolarBackendSrc,
+				backendDir,
+				context,
+			);
+		}
+	}
 
 	if (
 		(serverAppDirExists || context.backend === "self") &&
@@ -731,12 +749,42 @@ export async function setupPaymentsTemplate(
 				),
 			);
 			if (reactFramework) {
-				const paymentsWebSrc = path.join(
-					PKG_ROOT,
-					`templates/payments/${context.payments}/web/react/${reactFramework}`,
-				);
-				if (await fs.pathExists(paymentsWebSrc)) {
-					await processAndCopyFiles("**/*", paymentsWebSrc, webAppDir, context);
+				// Handle Convex-specific web templates
+				if (context.backend === "convex") {
+					const convexPolarWebBaseSrc = path.join(
+						PKG_ROOT,
+						`templates/payments/${context.payments}/convex/web/react/base`,
+					);
+					if (await fs.pathExists(convexPolarWebBaseSrc)) {
+						await processAndCopyFiles(
+							"**/*",
+							convexPolarWebBaseSrc,
+							webAppDir,
+							context,
+						);
+					}
+
+					const convexPolarWebSrc = path.join(
+						PKG_ROOT,
+						`templates/payments/${context.payments}/convex/web/react/${reactFramework}`,
+					);
+					if (await fs.pathExists(convexPolarWebSrc)) {
+						await processAndCopyFiles(
+							"**/*",
+							convexPolarWebSrc,
+							webAppDir,
+							context,
+						);
+					}
+				} else {
+					// Handle traditional backend web templates
+					const paymentsWebSrc = path.join(
+						PKG_ROOT,
+						`templates/payments/${context.payments}/web/react/${reactFramework}`,
+					);
+					if (await fs.pathExists(paymentsWebSrc)) {
+						await processAndCopyFiles("**/*", paymentsWebSrc, webAppDir, context);
+					}
 				}
 			}
 		} else if (hasNuxtWeb) {
